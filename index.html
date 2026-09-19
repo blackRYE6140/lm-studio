@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lm-studio — éditeur de lettres de motivation</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">✉️ <strong>lm-studio</strong></div>
+  <div class="doc-bar">
+    <select id="doc-select" title="Choisir une lettre"></select>
+    <input id="doc-title" type="text" placeholder="Titre de la lettre">
+    <button id="btn-new" title="Nouvelle lettre vierge (coordonnées conservées)">+ Nouvelle</button>
+    <button id="btn-dup" title="Dupliquer la lettre courante">⧉</button>
+    <button id="btn-del" title="Supprimer la lettre courante">🗑</button>
+  </div>
+  <div class="io-bar">
+    <button id="btn-export">⤓ Exporter</button>
+    <button id="btn-import">⤒ Importer</button>
+    <input id="file-import" type="file" accept="application/json" hidden>
+    <span id="save-state" class="muted"></span>
+  </div>
+</header>
+
+<div id="warnings" class="warnings"></div>
+
+<main class="layout">
+  <section class="form-panel">
+
+    <fieldset>
+      <legend>Tête gauche — expéditeur</legend>
+      <div class="grid2">
+        <label>Nom<input data-bind="expediteur.nom"></label>
+        <label>Adresse<input data-bind="expediteur.adresse"></label>
+        <label>Téléphone<input data-bind="expediteur.tel" placeholder="+261 …"></label>
+        <label>Email<input data-bind="expediteur.email" placeholder="…@…"></label>
+        <label class="span2">Site / portfolio<input data-bind="expediteur.site" placeholder="https://…"></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Tête droite — destinataire <span class="muted">(une ligne par ligne de texte)</span></legend>
+      <textarea data-bind="destinataireLines" rows="3"></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>Date, objet, salutation</legend>
+      <div class="row-inline">
+        <label class="grow">Lieu et date<input data-bind="lieuDate"></label>
+        <button id="btn-today" title="Mettre la date du jour en français">📅 aujourd'hui</button>
+      </div>
+      <label>Objet<input data-bind="objet"></label>
+      <label>Salutation<input data-bind="salutation"></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Paragraphes <span id="para-count" class="muted"></span></legend>
+      <div id="paragraphes"></div>
+      <button id="btn-add-para" class="wide">+ Ajouter un paragraphe</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>Signature</legend>
+      <label><input data-bind="signature"></label>
+    </fieldset>
+
+    <div class="actions">
+      <button id="btn-pdf" class="primary">Générer le PDF</button>
+      <button id="btn-print" title="Sans serveur : passe par l'impression du navigateur (choisir marges « Par défaut »)">🖨 Imprimer (secours)</button>
+      <button id="btn-json">⤓ JSON de cette lettre</button>
+    </div>
+    <div id="status" class="muted"></div>
+
+  </section>
+
+  <section class="preview-panel">
+    <div class="preview-head">Aperçu A4 — Times New Roman 12pt, interligne 1,5, marges 25mm</div>
+    <div class="preview-scaler" id="scaler">
+      <iframe id="apercu" title="Aperçu de la lettre"></iframe>
+    </div>
+  </section>
+</main>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
