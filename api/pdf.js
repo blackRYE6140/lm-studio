@@ -39,7 +39,7 @@ export default async function handler(req, res) {
     const { data, filename } = req.body || {};
     if (!data || typeof data !== "object") return res.status(400).json({ error: "Champ « data » manquant" });
 
-    const fontFace = `@font-face { font-family: "Liberation Serif"; font-weight: normal; src: url(data:font/ttf;base64,${FONT_B64}) format("truetype"); }`;
+    const fontFace = `@font-face { font-family: "Times New Roman"; font-weight: normal; src: url(data:font/ttf;base64,${FONT_B64}) format("truetype"); } @font-face { font-family: "Liberation Serif"; font-weight: normal; src: url(data:font/ttf;base64,${FONT_B64}) format("truetype"); }`;
     const { data: cleaned, warnings } = guards(data);
     const html = renderLetterDoc(cleaned, { fontFace });
 
