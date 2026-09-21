@@ -24,6 +24,11 @@ button.wide { width: 100%; margin-top: 8px; border-style: dashed; }
 }
 .brand { font-size: 16px; }
 .doc-bar, .io-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.cv-link {
+  margin-left: auto; border: 1px solid var(--accent); background: var(--accent); color: #fff;
+  border-radius: 7px; padding: 6px 11px; text-decoration: none; white-space: nowrap;
+}
+.cv-link:hover { filter: brightness(1.1); color: #fff; }
 #doc-select { max-width: 200px; padding: 6px; border-radius: 7px; border: 1px solid var(--line); }
 #doc-title { flex: 1; min-width: 140px; padding: 6px 9px; border: 1px solid var(--line); border-radius: 7px; }
 
