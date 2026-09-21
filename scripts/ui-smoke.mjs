@@ -20,7 +20,7 @@ const t = async (name, fn) => { try { const r = await fn(); console.log(`${r ? "
 
 await page.goto("http://127.0.0.1:8741/index.html", { waitUntil: "load" });
 
-await t("formulaire initialisé (nom expéditeur)", async () => (await page.inputValue('[data-bind="expediteur.nom"]')).includes("RAFALIMANANA"));
+await t("formulaire initialisé (nom expéditeur)", async () => (await page.inputValue('[data-bind="expediteur.nom"]')).includes("Andry RAKOTO"));
 await t("6 paragraphes affichés", async () => (await page.$$(".para-row")).length === 6);
 await t("aperçu A4 construit", async () => {
   const frame = await page.$("#apercu");

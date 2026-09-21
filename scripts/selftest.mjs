@@ -28,7 +28,7 @@ const html = renderLetterDoc(SEED_LETTER);
 t("12pt + 20.7pt",       html.includes("font-size: 12pt") && html.includes("line-height: 20.7pt"));
 t("marges 25mm",         html.includes("margin: 25mm"));
 t("police TNR->Liberation", html.includes('"Times New Roman"') && html.includes("Liberation Serif"));
-t("3 liens actifs",      html.includes("tel:+261342928355") && html.includes("mailto:rafalimananayannicketan@gmail.com") && html.includes("https://rafalimananayannicketan.vercel.app/"));
+t("5 liens actifs",      html.includes("tel:+261340000000") && html.includes("mailto:andry.rakoto@exemple.mg") && html.includes("https://andryrakoto.dev") && html.includes("https://github.com/andryrakoto") && html.includes("https://linkedin.com/in/andryrakoto"));
 t("pas de <strong>",     !/<strong|<b>/i.test(html));
 t("pas d'emdash",        !html.includes("—"));
 t("6 paragraphes rendus", (html.match(/class="p"/g) || []).length === 7); // 6 + salutation
