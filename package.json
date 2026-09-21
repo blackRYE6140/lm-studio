@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22" },
+  "engines": { "node": "20.x" },
   "scripts": {
+    "build": "echo 'No build step required'",
     "serve": "node scripts/dev-server.mjs",
     "build-font": "node scripts/build-font.mjs",
     "check": "node scripts/selftest.mjs",

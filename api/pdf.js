@@ -4,7 +4,7 @@ import chromium from "@sparticuz/chromium";
 import { chromium as pw } from "playwright-core";
 import { PDFDocument } from "pdf-lib";
 import { renderLetterDoc, guards } from "../lib/render.mjs";
-import { FONT_B64 } from "./_font-data.mjs";
+import { FONT_B64 } from "../lib/_font-data.mjs";
 import { existsSync } from "node:fs";
 
 // Deux environnements d'exécution :

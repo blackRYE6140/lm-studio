@@ -1,12 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": null,
-  "cleanUrls": true,
-  "functions": {
-    "api/pdf.js": {
-      "runtime": "nodejs22.x",
-      "memory": 1024,
-      "maxDuration": 60
-    }
-  }
+  "cleanUrls": true
 }
