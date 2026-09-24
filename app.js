@@ -48,10 +48,19 @@ document.addEventListener("click", async (event) => {
 
 document.addEventListener("click", (event) => {
   const toggle = event.target.closest("#mobile-menu-toggle");
-  if (!toggle) return;
-  const open = document.querySelector(".topbar").classList.toggle("menu-open");
-  toggle.setAttribute("aria-expanded", String(open));
-  toggle.setAttribute("aria-label", open ? "Masquer les outils" : "Afficher les outils");
+  const topbar = document.querySelector(".topbar");
+  const menu = document.querySelector("#mobile-tools");
+  if (toggle) {
+    const open = topbar.classList.toggle("menu-open");
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Masquer les outils" : "Afficher les outils");
+    return;
+  }
+  if (topbar.classList.contains("menu-open") && (!menu.contains(event.target) || event.target.closest("button, a"))) {
+    topbar.classList.remove("menu-open");
+    document.querySelector("#mobile-menu-toggle").setAttribute("aria-expanded", "false");
+    document.querySelector("#mobile-menu-toggle").setAttribute("aria-label", "Afficher les outils");
+  }
 });
 
 const scrollJump = $("#scroll-jump");
@@ -192,16 +201,10 @@ function fitPreview() {
   const available = Math.max(220, panel.clientWidth - 12);
   const scale = Math.min(1, available / baseWidth);
   const el = $("#apercu");
-  const finalWidth = Math.max(220, Math.round(baseWidth * scale));
-  el.style.width = `${finalWidth}px`;
-  el.style.transform = "none";
-  el.style.maxWidth = "100%";
-  const frameDoc = el.contentDocument;
-  if (frameDoc && frameDoc.body) {
-    const page = frameDoc.querySelector("body");
-    if (page) page.style.maxWidth = `${finalWidth}px`;
-  }
-  el.parentElement.style.height = `${Math.max(320, Math.ceil((frameDoc?.body?.scrollHeight || el.offsetHeight) * scale))}px`;
+  el.style.width = `${baseWidth}px`;
+  el.style.maxWidth = "none";
+  el.style.transform = `scale(${scale})`;
+  el.parentElement.style.height = `${Math.max(320, Math.ceil(el.offsetHeight * scale))}px`;
 }
 addEventListener("resize", () => { fitPreview(); });
 
