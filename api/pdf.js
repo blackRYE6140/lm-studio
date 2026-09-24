@@ -11,7 +11,7 @@ import { existsSync } from "node:fs";
 //  - Production Vercel (AWS Lambda) : le Chromium compacts de @sparticuz/chromium.
 //  - Local (`vercel dev`, scripts de test) : le Chrome/Chromium du système.
 async function browserTarget() {
-  if (process.env.AWS_LAMBDA_FUNCTION_NAME) {
+  if (process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.VERCEL) {
     return { executablePath: await chromium.executablePath(), args: chromium.args };
   }
   const sys = [
