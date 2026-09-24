@@ -54,6 +54,45 @@ document.addEventListener("click", (event) => {
   toggle.setAttribute("aria-label", open ? "Masquer les outils" : "Afficher les outils");
 });
 
+const scrollJump = $("#scroll-jump");
+const mobileFormToggle = $("#mobile-form-toggle");
+const layout = $(".layout");
+
+const updateScrollJump = () => {
+  const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 80;
+  const goTop = window.scrollY > 80 || atBottom;
+  scrollJump.textContent = goTop ? "↑" : "↓";
+  scrollJump.setAttribute("aria-label", goTop ? "Revenir en haut" : "Aller en bas");
+  scrollJump.title = goTop ? "Revenir en haut" : "Aller en bas";
+};
+
+const syncMobileFormToggle = () => {
+  const collapsed = layout.classList.contains("editor-collapsed");
+  mobileFormToggle.textContent = collapsed ? "✎" : "✕";
+  mobileFormToggle.setAttribute("aria-expanded", String(!collapsed));
+  mobileFormToggle.setAttribute("aria-label", collapsed ? "Afficher le formulaire" : "Masquer le formulaire");
+  mobileFormToggle.title = collapsed ? "Afficher le formulaire" : "Masquer le formulaire";
+};
+
+mobileFormToggle.addEventListener("click", () => {
+  const collapsed = layout.classList.toggle("editor-collapsed");
+  syncMobileFormToggle();
+  if (!collapsed) {
+    document.documentElement.scrollTo({ top: 0, behavior: "smooth" });
+  }
+});
+
+scrollJump.addEventListener("click", () => {
+  const goTop = window.scrollY > 80 || window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 80;
+  window.scrollTo({ top: goTop ? 0 : document.documentElement.scrollHeight, behavior: "smooth" });
+});
+addEventListener("scroll", updateScrollJump, { passive: true });
+addEventListener("resize", updateScrollJump);
+addEventListener("load", () => {
+  updateScrollJump();
+  syncMobileFormToggle();
+});
+
 // ---------- état global ----------
 let store = load();
 function load() {
@@ -149,10 +188,20 @@ function renderPreview() {
 }
 function fitPreview() {
   const panel = $(".preview-panel");
-  const scale = Math.min(1, (panel.clientWidth - 4) / 794);
+  const baseWidth = 794;
+  const available = Math.max(220, panel.clientWidth - 12);
+  const scale = Math.min(1, available / baseWidth);
   const el = $("#apercu");
-  el.style.transform = `scale(${scale})`;
-  el.parentElement.style.height = Math.ceil(el.offsetHeight * scale) + "px";
+  const finalWidth = Math.max(220, Math.round(baseWidth * scale));
+  el.style.width = `${finalWidth}px`;
+  el.style.transform = "none";
+  el.style.maxWidth = "100%";
+  const frameDoc = el.contentDocument;
+  if (frameDoc && frameDoc.body) {
+    const page = frameDoc.querySelector("body");
+    if (page) page.style.maxWidth = `${finalWidth}px`;
+  }
+  el.parentElement.style.height = `${Math.max(320, Math.ceil((frameDoc?.body?.scrollHeight || el.offsetHeight) * scale))}px`;
 }
 addEventListener("resize", () => { fitPreview(); });
 

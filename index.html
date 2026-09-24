@@ -41,6 +41,9 @@
   <button id="pwa-install-close" type="button" aria-label="Fermer">×</button>
 </div>
 
+<button id="scroll-jump" class="scroll-jump" type="button" aria-label="Aller en bas" title="Aller en bas">↓</button>
+<button id="mobile-form-toggle" class="mobile-form-toggle" type="button" aria-label="Masquer le formulaire" aria-expanded="true" title="Masquer le formulaire">✕</button>
+
 <main class="layout">
   <section class="form-panel">
 
@@ -93,6 +96,11 @@
   </section>
 
   <section class="preview-panel">
+    <div class="preview-mobile-actions" aria-label="Actions rapides">
+      <button id="btn-pdf-mobile" class="primary" type="button">Générer le PDF</button>
+      <button id="btn-print-mobile" type="button" title="Imprimer (secours)">🖨</button>
+      <button id="btn-json-mobile" type="button" title="JSON de cette lettre">⤓</button>
+    </div>
     <div class="preview-head">Aperçu A4 — Times New Roman 12pt, interligne 1,5, marges 25mm</div>
     <div class="preview-scaler" id="scaler">
       <iframe id="apercu" title="Aperçu de la lettre"></iframe>
