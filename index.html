@@ -15,10 +15,12 @@
 <header class="topbar">
   <div class="brand">✉️ <strong>lm-studio</strong></div>
   <div class="mobile-model-bar" aria-label="Choisir le modèle">
-    <button type="button" class="model-chip" data-model="A">A</button>
-    <button type="button" class="model-chip" data-model="B">B</button>
-    <button type="button" class="model-chip" data-model="C">C</button>
-    <button type="button" class="model-chip" data-model="D">D</button>
+    <select id="template-select-top" aria-label="Modèle de la lettre">
+      <option value="A">A — classique</option>
+      <option value="B">B — signature à droite</option>
+      <option value="C">C — destinataire aligné en tête</option>
+      <option value="D">D — tête alignée, signature à droite</option>
+    </select>
   </div>
   <button id="mobile-menu-toggle" class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-tools" aria-label="Afficher les outils">☰</button>
   <div id="mobile-tools" class="mobile-tools">

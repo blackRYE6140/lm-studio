@@ -6,7 +6,7 @@ const KEY = "lm-studio:v1";
 const $ = (s) => document.querySelector(s);
 
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" }).catch(() => {}));
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js?v=4", { updateViaCache: "none" }).then((registration) => registration.update()).catch(() => {}));
 }
 
 let deferredInstallPrompt = null;
@@ -71,21 +71,17 @@ document.addEventListener("click", (event) => {
 const scrollJump = $("#scroll-jump");
 const mobileFormToggle = $("#mobile-form-toggle");
 const layout = $(".layout");
-const modelChips = [...document.querySelectorAll(".model-chip")];
+const topTemplateSelect = $("#template-select-top");
 
 function syncModelChips() {
   const current = $("#template-select").value || "A";
-  modelChips.forEach((chip) => {
-    const active = chip.dataset.model === current;
-    chip.classList.toggle("is-active", active);
-    chip.setAttribute("aria-pressed", String(active));
-  });
+  topTemplateSelect.value = current;
 }
 
-modelChips.forEach((chip) => chip.addEventListener("click", () => {
-  $("#template-select").value = chip.dataset.model;
+topTemplateSelect.addEventListener("change", (event) => {
+  $("#template-select").value = event.target.value;
   $("#template-select").dispatchEvent(new Event("change", { bubbles: true }));
-}));
+});
 
 const updateScrollJump = () => {
   const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 80;
