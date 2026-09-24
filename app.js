@@ -6,7 +6,7 @@ const KEY = "lm-studio:v1";
 const $ = (s) => document.querySelector(s);
 
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" }).catch(() => {}));
 }
 
 let deferredInstallPrompt = null;
