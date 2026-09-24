@@ -5,12 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>lm-studio — éditeur de lettres de motivation</title>
 <link rel="icon" href="data:,">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.svg">
+<meta name="theme-color" content="#2b5f8a">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <header class="topbar">
   <div class="brand">✉️ <strong>lm-studio</strong></div>
+  <button id="mobile-menu-toggle" class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-tools" aria-label="Afficher les outils">☰</button>
+  <div id="mobile-tools" class="mobile-tools">
   <div class="doc-bar">
     <select id="doc-select" title="Choisir une lettre"></select>
     <input id="doc-title" type="text" placeholder="Titre de la lettre">
@@ -25,9 +30,16 @@
     <span id="save-state" class="muted"></span>
   </div>
   <a class="cv-link" href="https://curriculumvitaestudio.vercel.app/" target="_blank" rel="noopener noreferrer">Voir mon CV ↗</a>
+  </div>
 </header>
 
 <div id="warnings" class="warnings"></div>
+
+<div id="pwa-install-banner" class="pwa-install-banner" role="status" aria-live="polite" hidden>
+  <span>Installer et utiliser hors ligne</span>
+  <button id="pwa-install" type="button">Installer</button>
+  <button id="pwa-install-close" type="button" aria-label="Fermer">×</button>
+</div>
 
 <main class="layout">
   <section class="form-panel">

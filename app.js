@@ -5,6 +5,55 @@ import { SEED_LETTER, blankLetter } from "./lib/seed.mjs";
 const KEY = "lm-studio:v1";
 const $ = (s) => document.querySelector(s);
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
+}
+
+let deferredInstallPrompt = null;
+const isAndroid = /Android/i.test(navigator.userAgent);
+const isStandalone = () => window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+const installBanner = () => $("#pwa-install-banner");
+const showInstallBanner = () => {
+  if (!isAndroid || isStandalone() || localStorage.getItem("lm-studio:pwa-install-dismissed")) return;
+  installBanner().hidden = false;
+};
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  showInstallBanner();
+});
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  installBanner().hidden = true;
+});
+window.addEventListener("load", () => {
+  if (isAndroid && !isStandalone()) setTimeout(showInstallBanner, 1500);
+});
+document.addEventListener("click", async (event) => {
+  if (event.target.closest("#pwa-install-close")) {
+    installBanner().hidden = true;
+    localStorage.setItem("lm-studio:pwa-install-dismissed", "1");
+    return;
+  }
+  if (!event.target.closest("#pwa-install")) return;
+  if (!deferredInstallPrompt) {
+    $("#status").textContent = "Utilise le menu du navigateur, puis « Ajouter à l'écran d'accueil ».";
+    return;
+  }
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  installBanner().hidden = true;
+});
+
+document.addEventListener("click", (event) => {
+  const toggle = event.target.closest("#mobile-menu-toggle");
+  if (!toggle) return;
+  const open = document.querySelector(".topbar").classList.toggle("menu-open");
+  toggle.setAttribute("aria-expanded", String(open));
+  toggle.setAttribute("aria-label", open ? "Masquer les outils" : "Afficher les outils");
+});
+
 // ---------- état global ----------
 let store = load();
 function load() {
