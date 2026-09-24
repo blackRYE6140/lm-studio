@@ -14,6 +14,12 @@
 
 <header class="topbar">
   <div class="brand">✉️ <strong>lm-studio</strong></div>
+  <div class="mobile-model-bar" aria-label="Choisir le modèle">
+    <button type="button" class="model-chip" data-model="A">A</button>
+    <button type="button" class="model-chip" data-model="B">B</button>
+    <button type="button" class="model-chip" data-model="C">C</button>
+    <button type="button" class="model-chip" data-model="D">D</button>
+  </div>
   <button id="mobile-menu-toggle" class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-tools" aria-label="Afficher les outils">☰</button>
   <div id="mobile-tools" class="mobile-tools">
   <div class="doc-bar">
@@ -47,7 +53,7 @@
 <main class="layout">
   <section class="form-panel">
 
-    <fieldset>
+    <fieldset id="model-fieldset">
       <legend>Modèle</legend>
       <label>Choisir la mise en page
         <select id="template-select">

@@ -71,6 +71,21 @@ document.addEventListener("click", (event) => {
 const scrollJump = $("#scroll-jump");
 const mobileFormToggle = $("#mobile-form-toggle");
 const layout = $(".layout");
+const modelChips = [...document.querySelectorAll(".model-chip")];
+
+function syncModelChips() {
+  const current = $("#template-select").value || "A";
+  modelChips.forEach((chip) => {
+    const active = chip.dataset.model === current;
+    chip.classList.toggle("is-active", active);
+    chip.setAttribute("aria-pressed", String(active));
+  });
+}
+
+modelChips.forEach((chip) => chip.addEventListener("click", () => {
+  $("#template-select").value = chip.dataset.model;
+  $("#template-select").dispatchEvent(new Event("change", { bubbles: true }));
+}));
 
 const updateScrollJump = () => {
   const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 80;
@@ -82,6 +97,7 @@ const updateScrollJump = () => {
 
 const syncMobileFormToggle = () => {
   const collapsed = layout.classList.contains("editor-collapsed");
+  topbar.classList.toggle("form-collapsed", collapsed);
   mobileFormToggle.textContent = collapsed ? "✎" : "✕";
   mobileFormToggle.setAttribute("aria-expanded", String(!collapsed));
   mobileFormToggle.setAttribute("aria-label", collapsed ? "Afficher le formulaire" : "Masquer le formulaire");
@@ -146,6 +162,7 @@ function setPath(o, p, v) {
 function fillForm() {
   const d = cur();
   $("#template-select").value = d.data.template || "A";
+  syncModelChips();
   $("#doc-select").innerHTML = store.docs.map(x =>
     `<option value="${x.id}"${x.id === currentId ? " selected" : ""}>${esc(x.title)}</option>`).join("");
   $("#doc-title").value = d.title;
@@ -164,6 +181,7 @@ $("#template-select").addEventListener("change", (event) => {
   cur().data.template = event.target.value;
   scheduleSave();
   renderPreview();
+  syncModelChips();
 });
 
 function renderParagraphes() {
