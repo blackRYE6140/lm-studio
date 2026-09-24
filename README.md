@@ -9,6 +9,7 @@
 - **Zéro gras forcé** (CSS `font-weight: normal !important` + strip `**gras**`)
 - **Tirets longs « —/– » automatiquement corrigés** en `-` avec warning
 - Liens `tel:` / `mailto:` / `https:` **cliquables** dans le PDF final
+- Quatre modèles disponibles : **A** classique, **B** avec signature alignée à droite, **C** avec expéditeur et destinataire alignés en tête sur deux colonnes, **D** avec cette tête et la signature à droite
 
 ## Structure
 ```

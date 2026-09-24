@@ -145,6 +145,7 @@ function setPath(o, p, v) {
 // ---------- rendu du formulaire ----------
 function fillForm() {
   const d = cur();
+  $("#template-select").value = d.data.template || "A";
   $("#doc-select").innerHTML = store.docs.map(x =>
     `<option value="${x.id}"${x.id === currentId ? " selected" : ""}>${esc(x.title)}</option>`).join("");
   $("#doc-title").value = d.title;
@@ -158,6 +159,12 @@ function fillForm() {
   renderWarnings(d.data);
   renderPreview();
 }
+
+$("#template-select").addEventListener("change", (event) => {
+  cur().data.template = event.target.value;
+  scheduleSave();
+  renderPreview();
+});
 
 function renderParagraphes() {
   const ps = cur().data.paragraphes;

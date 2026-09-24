@@ -36,6 +36,7 @@ button.wide { width: 100%; margin-top: 8px; border-style: dashed; }
 .cv-link:hover { filter: brightness(1.1); color: #fff; }
 #doc-select { max-width: 200px; padding: 6px; border-radius: 7px; border: 1px solid var(--line); }
 #doc-title { flex: 1; min-width: 140px; padding: 6px 9px; border: 1px solid var(--line); border-radius: 7px; }
+#template-select { width: 100%; padding: 7px 9px; border: 1px solid var(--line); border-radius: 7px; background: #fff; }
 
 @media (max-width: 940px) { .cv-link { margin-left: 0; } }
 

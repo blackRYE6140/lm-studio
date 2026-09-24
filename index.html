@@ -48,6 +48,18 @@
   <section class="form-panel">
 
     <fieldset>
+      <legend>Modèle</legend>
+      <label>Choisir la mise en page
+        <select id="template-select">
+          <option value="A">A — classique</option>
+          <option value="B">B — signature à droite</option>
+          <option value="C">C — destinataire aligné en tête</option>
+          <option value="D">D — tête alignée, signature à droite</option>
+        </select>
+      </label>
+    </fieldset>
+
+    <fieldset>
       <legend>Tête gauche — expéditeur</legend>
       <div class="grid2">
         <label>Nom<input data-bind="expediteur.nom"></label>

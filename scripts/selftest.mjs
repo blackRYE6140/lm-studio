@@ -34,6 +34,10 @@ t("pas d'emdash",        !html.includes("—"));
 t("6 paragraphes rendus", (html.match(/class="p"/g) || []).length === 7); // 6 + salutation
 t("XSS neutralisé",      !renderLetterDoc({ ...SEED_LETTER, objet: "<script>bad</script>" }).includes("<script>bad"));
 t("destinataire ancré à droite", html.includes("margin-left: auto; width: fit-content"));
+t("modèle A par défaut", html.includes('class="template-A"'));
+t("modèle B signature à droite", renderLetterDoc({ ...SEED_LETTER, template: "B" }).includes(".template-B .bloc-sig { text-align: right; }"));
+t("modèle C tête en deux colonnes", renderLetterDoc({ ...SEED_LETTER, template: "C" }).includes(".template-C .letter-head { display: grid; grid-template-columns: 1fr 1fr;") && renderLetterDoc({ ...SEED_LETTER, template: "C" }).includes('class="letter-head"'));
+t("modèle D tête alignée + signature à droite", renderLetterDoc({ ...SEED_LETTER, template: "D" }).includes(".template-D .bloc-sig { text-align: right; }") && renderLetterDoc({ ...SEED_LETTER, template: "D" }).includes(".template-D .letter-head { display: grid; grid-template-columns: 1fr 1fr;"));
 t("aperçu: corps margé 25mm", renderLetterDoc(SEED_LETTER, { preview: true }).includes("body { margin: 25mm; width: 160mm;"));
 t("PDF: corps sans marge (géré par page.pdf)", !html.includes("body { margin: 25mm;"));
 
