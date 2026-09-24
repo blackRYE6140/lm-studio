@@ -46,21 +46,26 @@ document.addEventListener("click", async (event) => {
   installBanner().hidden = true;
 });
 
+const topbar = document.querySelector(".topbar");
+const mobileMenu = document.querySelector("#mobile-tools");
+const mobileMenuToggle = document.querySelector("#mobile-menu-toggle");
+const closeMobileMenu = () => {
+  topbar.classList.remove("menu-open");
+  mobileMenuToggle.setAttribute("aria-expanded", "false");
+  mobileMenuToggle.setAttribute("aria-label", "Afficher les outils");
+};
+document.addEventListener("pointerdown", (event) => {
+  if (topbar.classList.contains("menu-open") && !topbar.contains(event.target)) closeMobileMenu();
+});
 document.addEventListener("click", (event) => {
   const toggle = event.target.closest("#mobile-menu-toggle");
-  const topbar = document.querySelector(".topbar");
-  const menu = document.querySelector("#mobile-tools");
   if (toggle) {
     const open = topbar.classList.toggle("menu-open");
     toggle.setAttribute("aria-expanded", String(open));
     toggle.setAttribute("aria-label", open ? "Masquer les outils" : "Afficher les outils");
     return;
   }
-  if (topbar.classList.contains("menu-open") && (!menu.contains(event.target) || event.target.closest("button, a"))) {
-    topbar.classList.remove("menu-open");
-    document.querySelector("#mobile-menu-toggle").setAttribute("aria-expanded", "false");
-    document.querySelector("#mobile-menu-toggle").setAttribute("aria-label", "Afficher les outils");
-  }
+  if (topbar.classList.contains("menu-open") && (!mobileMenu.contains(event.target) || event.target.closest("button, a"))) closeMobileMenu();
 });
 
 const scrollJump = $("#scroll-jump");
@@ -281,6 +286,10 @@ $("#btn-today").addEventListener("click", () => {
 });
 
 // ---------- PDF serveur ----------
+document.getElementById("btn-pdf-mobile").addEventListener("click", () => $("#btn-pdf").click());
+document.getElementById("btn-print-mobile").addEventListener("click", () => $("#btn-print").click());
+document.getElementById("btn-json-mobile").addEventListener("click", () => $("#btn-json").click());
+
 $("#btn-pdf").addEventListener("click", async () => {
   const st = $("#status");
   st.textContent = "génération en cours…";
